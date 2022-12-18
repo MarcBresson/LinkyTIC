@@ -2,30 +2,40 @@
 // #define P1(name) const char name[] PROGMEM
 // #endif
 
-#include <string.h>
 #include "LinkyTIC.h"
 
 /************************* Defines and const  **************************/
 
-uint8_t _max_buffer_length 20
-char _buffer[_max_buffer_length];
-char *_buffer_pointer;
-uint8_t _buffer_index;
-bool _tag_recep_in_progress;
+char _buffer_tag[8];            // buffer for the tag name
+char _buffer_date[16];          // buffer for the (optional) tag date. Must be the same length as value because we can't know in advance if it s going to be a date or a value
+char _buffer_value[16];         // buffer for the tag value
+char _buffer_checksum;          // buffer for the tag checksum
+
+int *_buffers_pointer[4];       // pointer to each buffer
+char _buffer_pointer_index;     // define which pointer to use
+
+char _checksum;
+
+char _buffer_index;          // current buffer index
+bool _group_recep_in_progress;
 
 /*************** Constructor, methods and properties ******************/
-LinkyTIC::LinkyTIC(uint8_t pin_Rx){
-    _buffer_pointer = _buffer;
+LinkyTIC::LinkyTIC(char pin_Rx){
+    _buffers_pointer = {*_buffer_tag, *_buffer_date, *_buffer_value, *_buffer_checksum};
     _pin_Rx = pin_Rx;
 };
 
-LinkyTIC::read(){ // non-blocking function
+void LinkyTIC::init(){
+
+}
+
+bool LinkyTIC::read(){ // non-blocking function
     readByte()
 
     return _status == STATUS_OK 
 }
 
-LinkyTIC::readUntil(uint16_t timeout){ // blocking function
+void LinkyTIC::readUntil(int timeout){ // blocking function
     uint32_t start = millis();
     while (millis() - start < timeout){
         readByte();
@@ -33,41 +43,50 @@ LinkyTIC::readUntil(uint16_t timeout){ // blocking function
     }
 }
 
-LinkyTIC::readByte(){
+char c;
+void LinkyTIC::readByte(){
     if(_stream.available()){
         c = _LRx.read();
+
         if (c == 0x02){ // STX start text : start of frame
             _status = STATUS_WAITING
         }
         else if (c == 0x03){ // ETX end text : end of frame
-            // status is okay if this character is received
-            // and if every checksums are correct
+            // status is okay every checksums are correct
             if(_status != STATUS_FAILED){
                 _status = STATUS_OK
             }
         }
+
         else if (c == '\n'){ // new tag group
             _buffer_index = 0;
-            _tag_recep_in_progress = true;
+            _group_recep_in_progress = true;
+            _buffer_pointer_index = 0;  // next thing will be a tag name
         }
         else if(c == '\r') { // end of tag group
-            _tag_recep_in_progress = false;
+            if(_buffer_pointer_index == 2){ // There was no date in the group
+                _buffer_value = _buffer_date;
+                _buffer_checksum = _buffer_value[0];
+                _checksum -= _buffer_checksum;  // the received checksum is excluded from the checksum calculus
+
+                _checksum = (_checksum & 0x3f) + 0x20;
+            }
+            _group_recep_in_progress = false;
             parseBuffer(_buffer)
         }
-        else if(_tag_recep_in_progress) { // during data reception
-            *(_buffer_pointer + _buffer_index) = c
+
+        else if(_group_recep_in_progress) { // during data reception
+            if(c == 0x20 || c == 0x09){     // group separator, either <SP> (0x20) or <HT> (0x09)
+                _buffer_pointer_index += 1;
+            } else {
+                *(_buffers_pointer[_buffer_pointer_index] + _buffer_index) = c
+            }
+            _checksum += c
         }
     }
 }
 
-LinkyTIC::parseBuffer(char[] buffer){
-    // must extract tag name, tag value, and optional date
-    // <LF> (0x0A) | tag name | <HT> (0x09) | value (int8, int16 or str) | <HT> (0x09) | Checksum | <CR> (0x0D)
-    // <LF> (0x0A) | tag name | <HT> (0x09) | date | <HT> (0x09) | value (int8, int16 or str) | <HT> (0x09) | Checksum | <CR> (0x0D)
-    setData()
-}
-
-LinkyTIC::setData(char[] tag_name, uncertain_type value, optional date){
+LinkyTIC::setData(char[] tag_name, uncertain_type value){
     // associate the value in the structure to the
     // value extracted in the parseBuffer function.
     // when we have an instance of this class, we
@@ -75,7 +94,7 @@ LinkyTIC::setData(char[] tag_name, uncertain_type value, optional date){
     // the LinkyTIC.tag_name
 }
 
-LinkyTIC::TramesDispo(){
+LinkyTIC::tramesDispo(){
     // read everything and report all frames that
     // exist and that have been received
 }

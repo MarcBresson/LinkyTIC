@@ -15,30 +15,35 @@ V06 : MicroQuettas mars 2018
 
 class LinkyTIC {
     public:
-        LinkyTIC(uint8_t pin_Rx, uint8_t pin_Tx);   /* Constructor */
+        LinkyTIC(uint8_t pin_Rx);   /* Constructor */
 
         struct DATA {
             // what am I supposed to write ?
             // the type can be different for each group (str, int8, int16)
         }
         
-        void Init();        /* Initialisation, call from setup() */
-        void Update();      /* Update, call from loop() */
+        void init();                // Initialisation, call from setup()
 
-        void TramesDispo();
+        void tramesDispo();         // Display every tag names delivered by your electric counter
 
-        bool Read(DATA& data);
-        bool ReadUntil(DATA& data);
+        bool read(DATA& data);      // non-blocking way of reading new value. Return true when a frame is complete
+        void readUntil(DATA& data); // blocking reading function
 
     private:
         enum STATUS {STATUS_WAITING, STATUS_OK, STATUS_FAILED};
         STATUS _status;
 
-        void ReadByte();
-        void parseBuffer();
-        void setData();
 
-        Stream* _stream;
+        char _buffer_tag[8];
+        char _buffer_date[13];
+        char _buffer_value[16];
+        int *_buffer_pointer[4];
+
+        void readByte();    // read one new serial byte and happen it to the buffer
+        void parseBuffer(); // convert the buffer to a tag name and a value (will probably be moved inside readbyte for more convenience)
+        void setData();     // set the value of the tag in the structure to the desired value
+
+        Stream* _stream;    // Serial stream
 }
 
 #endif
