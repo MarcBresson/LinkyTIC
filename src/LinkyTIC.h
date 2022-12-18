@@ -39,8 +39,20 @@ class LinkyTIC {
         char _buffer_value[16];
         int *_buffer_pointer[4];
 
+        char _buffer_tag[8];            // buffer for the tag name
+        char _buffer_date[16];          // buffer for the (optional) tag date. Must be the same length as value because we can't know in advance if it s going to be a date or a value
+        char _buffer_value[16];         // buffer for the tag value
+        char _buffer_checksum;          // buffer for the tag checksum
+
+        int *_buffers_pointer[4];       // pointer to each buffer
+        char _buffer_pointer_index;     // define which pointer to use
+
+        char _checksum;
+
+        char _buffer_index;          // current buffer index
+        bool _group_recep_in_progress;
+
         void readByte();    // read one new serial byte and happen it to the buffer
-        void parseBuffer(); // convert the buffer to a tag name and a value (will probably be moved inside readbyte for more convenience)
         void setData();     // set the value of the tag in the structure to the desired value
 
         Stream* _stream;    // Serial stream
