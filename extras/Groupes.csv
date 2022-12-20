@@ -1,93 +1,93 @@
 ﻿Désignation, Étiquette, Nombre de caractères, Unité,type, Horodate,Standard
 Adresse du compteur, ADCO,12,,str,,
 Option tarifaire choisie, OPTARIF,4,,str,,
-Intensité souscrite, ISOUSC,2, A,int8,,
-Index option Base, BASE,9, Wh,int32,,
-Heures Creuses, HCHC,9, Wh,int32,,
-Heures Pleines, HCHP,9, Wh,int32,,
-Heures Normales, EJPHN,9, Wh,int32,,
-Heures de Pointe Mobile, EJPHPM,9, Wh,int32,,
-Heures Creuses Jours Bleus, BBRHCJB,9, Wh,int32,,
-Heures Pleines Jours Bleus, BBRHPJB,9, Wh,int32,,
-Heures Creuses Jours Blancs, BBRHCJW,9, Wh,int32,,
-Heures Pleines Jours Blancs, BBRHPJW,9, Wh,int32,,
-Heures Creuses Jours Rouges, BBRHCJR,9, Wh,int32,,
-Heures Pleines Jours Rouges, BBRHPJR,9, Wh,int32,,
-Préavis Début EJP (30 min), PEJP,2, min,int8,,
+Intensité souscrite, ISOUSC,2, A,uint8,,
+Index option Base, BASE,9, Wh,uint32,,
+Heures Creuses, HCHC,9, Wh,uint32,,
+Heures Pleines, HCHP,9, Wh,uint32,,
+Heures Normales, EJPHN,9, Wh,uint32,,
+Heures de Pointe Mobile, EJPHPM,9, Wh,uint32,,
+Heures Creuses Jours Bleus, BBRHCJB,9, Wh,uint32,,
+Heures Pleines Jours Bleus, BBRHPJB,9, Wh,uint32,,
+Heures Creuses Jours Blancs, BBRHCJW,9, Wh,uint32,,
+Heures Pleines Jours Blancs, BBRHPJW,9, Wh,uint32,,
+Heures Creuses Jours Rouges, BBRHCJR,9, Wh,uint32,,
+Heures Pleines Jours Rouges, BBRHPJR,9, Wh,uint32,,
+Préavis Début EJP (30 min), PEJP,2, min,uint8,,
 Période Tarifaire en cours, PTEC,4,,str,,
 Couleur du lendemain, DEMAIN,4,,str,,
-Intensité Instantanée, IINST,3, A,int16,,
-Intensité Instantanée pour les 3 phases 1 2 et 3, IINST1,3, A,int16,,
-Intensité Instantanée pour les 3 phases 1 2 et 3, IINST2,3, A,int16,,
-Intensité Instantanée pour les 3 phases 1 2 et 3, IINST3,3, A,int16,,
-Avertissement de Dépassement De Puissance Souscrite, ADPS,3, A,int16,,
-Intensité maximale appelée, IMAX,3, A,int16,,
-Intensité maximale par phase 1 2 et 3, IMAX1,3, A,int16,,
-Intensité maximale par phase 1 2 et 3, IMAX2,3, A,int16,,
-Intensité maximale par phase 1 2 et 3, IMAX3,3, A,int32,,
-Puissance maximale triphasée atteinte, PMAX,5, W,int32,,
-Puissance apparente, PAPP,5, VA,int32,,
+Intensité Instantanée, IINST,3, A,uint16,,
+Intensité Instantanée pour les 3 phases 1 2 et 3, IINST1,3, A,uint16,,
+Intensité Instantanée pour les 3 phases 1 2 et 3, IINST2,3, A,uint16,,
+Intensité Instantanée pour les 3 phases 1 2 et 3, IINST3,3, A,uint16,,
+Avertissement de Dépassement De Puissance Souscrite, ADPS,3, A,uint16,,
+Intensité maximale appelée, IMAX,3, A,uint16,,
+Intensité maximale par phase 1 2 et 3, IMAX1,3, A,uint16,,
+Intensité maximale par phase 1 2 et 3, IMAX2,3, A,uint16,,
+Intensité maximale par phase 1 2 et 3, IMAX3,3, A,uint32,,
+Puissance maximale triphasée atteinte, PMAX,5, W,uint32,,
+Puissance apparente, PAPP,5, VA,uint32,,
 Horaire Heures Pleines Heures Creuses, HHPHC,1, ,str,,
 Mot d'état du compteur, MOTDETAT,6,,str,,
 Présence des potentiels, PPOT,2,,str,,
-Avertissement de Dépassement d'intensité de réglage par phase, ADIR1,3, A,int16,,
-Avertissement de Dépassement d'intensité de réglage par phase, ADIR2,3, A,int16,,
-Avertissement de Dépassement d'intensité de réglage par phase, ADIR3,3, A,int16,,
+Avertissement de Dépassement d'intensité de réglage par phase, ADIR1,3, A,uint16,,
+Avertissement de Dépassement d'intensité de réglage par phase, ADIR2,3, A,uint16,,
+Avertissement de Dépassement d'intensité de réglage par phase, ADIR3,3, A,uint16,,
 Adresse Secondaire du Compteur, ADSC,12,,str,,x
 Version de la TIC, VTIC,2,,str,,x
 Date et heure courante, DATE,0,,str,x,x
 Nom du calendrier tarifaire fournisseur, NGTF,16,,str,,x
 Libellé tarif fournisseur en cours, LTARF,16,,str,,x
-Energie active soutirée totale, EAST,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 01, EASF01,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 02, EASF02,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 03, EASF03,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 04, EASF04,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 05, EASF05,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 06, EASF06,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 07, EASF07,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 08, EASF08,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 09, EASF09,9, Wh,int32,,x
-Energie active soutirée Fournisseur index 10, EASF10,9, Wh,int32,,x
-Energie active soutirée Distributeur index 01, EASD01,9, Wh,int32,,x
-Energie active soutirée Distributeur index 02, EASD02,9, Wh,int32,,x
-Energie active soutirée Distributeur index 03, EASD03,9, Wh,int32,,x
-Energie active soutirée Distributeur index 04, EASD04,9, Wh,int32,,x
-Energie active injectée totale, EAIT,9, Wh,int32,,x
-Energie réactive Q1 totale, ERQ1,9, VArh,int32,,x
-Energie réactive Q2 totale, ERQ2,9, VArh,int32,,x
-Energie réactive Q3 totale, ERQ3,9, VArh,int32,,x
-Energie réactive Q4 totale, ERQ4,9, VArh,int32,,x
-Courant efficace phase 1, IRMS1,3, A,int16,,x
-Courant efficace phase 2, IRMS2,3, A,int16,,x
-Courant efficace phase 3, IRMS3,3, A,int16,,x
-Tension efficace phase 1, URMS1,3, V,int16,,x
-Tension efficace phase 2, URMS2,3, V,int16,,x
-Tension efficace phase 3, URMS3,3, V,int16,,x
-Puissance app. de référence (PREF), PREF,2, kVA,int8,,x
-Puissance app. de coupure (PCOUP), PCOUP,2, kVA,int8,,x
-Puissance app. Instantanée soutirée, SINSTS,5, VA,int32,,x
-Puissance app. Instantanée soutirée phase 1, SINSTS1,5, VA,int32,,x
-Puissance app. instantanée soutirée phase 2, SINSTS2,5, VA,int32,,x
-Puissance app. instantanée soutirée phase 3, SINSTS3,5, VA,int32,,x
-Puissance app. max. soutirée n, SMAXSN,5, VA,int32,x,x
-Puissance app. max. soutirée n phase 1, SMAXSN1,5, VA,int32,x,x
-Puissance app. max. soutirée n phase 2, SMAXSN2,5, VA,int32,x,x
-Puissance app. max. soutirée n phase 3, SMAXSN3,5, VA,int32,x,x
-Puissance app max. soutirée n-1, SMAXSN-1,5, VA,int32,x,x
-Puissance app max. soutirée n-1 phase 1, SMAXSN1-1,5, VA,int32,x,x
-Puissance app max. soutirée n-1 phase 2, SMAXSN2-1,5, VA,int32,x,x
-Puissance app max. soutirée n-1 phase 3, SMAXSN3-1,5, VA,int32,x,x
-Puissance app. Instantanée injectée, SINSTI,5, VA,int32,,x
-Puissance app. max. injectée n, SMAXIN,5, VA,int32,x,x
-Puissance app max. injectée n-1, SMAXIN-1,5, VA,int32,x,x
-Point n de la courbe de charge active soutirée  , CCASN  ,5, W,int32,x,x
-Point n-1 de la courbe de charge active soutirée, CCASN-1,5, W,int32,x,x
-Point n de la courbe de charge active injectée  , CCAIN  ,5, W,int32,x,x
-Point n-1 de la courbe de charge active injectée, CCAIN-1,5, W,int32,x,x
-Tension moy. ph. 1, UMOY1,3, V,int16,x,x
-Tension moy. ph. 2, UMOY2,3, V,int16,x,x
-Tension moy. ph. 3, UMOY3,3, V,int16,x,x
+Energie active soutirée totale, EAST,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 01, EASF01,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 02, EASF02,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 03, EASF03,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 04, EASF04,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 05, EASF05,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 06, EASF06,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 07, EASF07,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 08, EASF08,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 09, EASF09,9, Wh,uint32,,x
+Energie active soutirée Fournisseur index 10, EASF10,9, Wh,uint32,,x
+Energie active soutirée Distributeur index 01, EASD01,9, Wh,uint32,,x
+Energie active soutirée Distributeur index 02, EASD02,9, Wh,uint32,,x
+Energie active soutirée Distributeur index 03, EASD03,9, Wh,uint32,,x
+Energie active soutirée Distributeur index 04, EASD04,9, Wh,uint32,,x
+Energie active injectée totale, EAIT,9, Wh,uint32,,x
+Energie réactive Q1 totale, ERQ1,9, VArh,uint32,,x
+Energie réactive Q2 totale, ERQ2,9, VArh,uint32,,x
+Energie réactive Q3 totale, ERQ3,9, VArh,uint32,,x
+Energie réactive Q4 totale, ERQ4,9, VArh,uint32,,x
+Courant efficace phase 1, IRMS1,3, A,uint16,,x
+Courant efficace phase 2, IRMS2,3, A,uint16,,x
+Courant efficace phase 3, IRMS3,3, A,uint16,,x
+Tension efficace phase 1, URMS1,3, V,uint16,,x
+Tension efficace phase 2, URMS2,3, V,uint16,,x
+Tension efficace phase 3, URMS3,3, V,uint16,,x
+Puissance app. de référence (PREF), PREF,2, kVA,uint8,,x
+Puissance app. de coupure (PCOUP), PCOUP,2, kVA,uint8,,x
+Puissance app. Instantanée soutirée, SINSTS,5, VA,uint32,,x
+Puissance app. Instantanée soutirée phase 1, SINSTS1,5, VA,uint32,,x
+Puissance app. instantanée soutirée phase 2, SINSTS2,5, VA,uint32,,x
+Puissance app. instantanée soutirée phase 3, SINSTS3,5, VA,uint32,,x
+Puissance app. max. soutirée n, SMAXSN,5, VA,uint32,x,x
+Puissance app. max. soutirée n phase 1, SMAXSN1,5, VA,uint32,x,x
+Puissance app. max. soutirée n phase 2, SMAXSN2,5, VA,uint32,x,x
+Puissance app. max. soutirée n phase 3, SMAXSN3,5, VA,uint32,x,x
+Puissance app max. soutirée n-1, SMAXSN-1,5, VA,uint32,x,x
+Puissance app max. soutirée n-1 phase 1, SMAXSN1-1,5, VA,uint32,x,x
+Puissance app max. soutirée n-1 phase 2, SMAXSN2-1,5, VA,uint32,x,x
+Puissance app max. soutirée n-1 phase 3, SMAXSN3-1,5, VA,uint32,x,x
+Puissance app. Instantanée injectée, SINSTI,5, VA,uint32,,x
+Puissance app. max. injectée n, SMAXIN,5, VA,uint32,x,x
+Puissance app max. injectée n-1, SMAXIN-1,5, VA,uint32,x,x
+Point n de la courbe de charge active soutirée  , CCASN  ,5, W,uint32,x,x
+Point n-1 de la courbe de charge active soutirée, CCASN-1,5, W,uint32,x,x
+Point n de la courbe de charge active injectée  , CCAIN  ,5, W,uint32,x,x
+Point n-1 de la courbe de charge active injectée, CCAIN-1,5, W,uint32,x,x
+Tension moy. ph. 1, UMOY1,3, V,uint16,x,x
+Tension moy. ph. 2, UMOY2,3, V,uint16,x,x
+Tension moy. ph. 3, UMOY3,3, V,uint16,x,x
 Registre de Statuts, STGE,8,,str,,x
 Début Pointe Mobile 1, DPM1,2,,str,x,x
 Fin Pointe Mobile   1, FPM1,2,,str,x,x
