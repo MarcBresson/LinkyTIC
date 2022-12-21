@@ -64,7 +64,7 @@ def generate_getter(etiquette: str, longueur: str, etiquette_type: str):
     apply getter template to a row of data
     """
     alphanumeric_etiquette = alphanumeric(etiquette)
-    content = f"""{type_correspondance(etiquette_type)} Get{alphanumeric_etiquette}(){{return _{alphanumeric_etiquette};}};"""
+    content = f"""{type_correspondance(etiquette_type, True)} Get{alphanumeric_etiquette}(){{return _{alphanumeric_etiquette};}};"""
     return encapsulate_in_ifdef(alphanumeric_etiquette, content)
 
 
@@ -94,11 +94,14 @@ def encapsulate_in_ifdef(condition: str, content: str):
     """
 
 
-def type_correspondance(var_type: str):
+def type_correspondance(var_type: str, getter: bool = False):
     """
     return the corresponding esp8266/arduino SDK type
     """
-    corresp = {'str': 'char*', 'uint8': 'uint8_t', 'uint16': 'uint16_t', 'uint32': 'uint32_t'}
+    corresp = {'str': 'char', 'uint8': 'uint8_t', 'uint16': 'uint16_t', 'uint32': 'uint32_t'}
+
+    if getter:
+        corresp['str'] = 'char*'
 
     if var_type not in corresp:
         raise TypeError(f"unknown type {var_type}")
@@ -110,7 +113,7 @@ def alphanumeric(string: str):
     """
     only keep alphanumeric caracters of a string
     """
-    pattern = re.compile(r'[\W_]+')
+    pattern = re.compile(r'[\W]+')
     return pattern.sub('', string.replace('-', '_'))
 
 

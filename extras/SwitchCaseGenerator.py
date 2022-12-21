@@ -107,7 +107,7 @@ def alphanumeric(string: str):
     """
     only keep alphanumeric caracters of a string
     """
-    pattern = re.compile(r'[\W_]+')
+    pattern = re.compile(r'[\W]+')
     return pattern.sub('', string.replace('-', '_'))
 
 
@@ -119,38 +119,6 @@ def hash_c_function():
     return """
 constexpr unsigned int hash(const char* str, int h = 0){
     return !str[h] ? 5381 : (hash(str, h+1) * 33) ^ str[h];
-}"""
-
-
-def another_hash_c_function():
-    """
-    return the string for the C hash function
-    from https://stackoverflow.com/a/37121071/12550791
-    """
-    return """
-const unsigned long hash(const char *str) {
-    unsigned long hash = 5381;
-    int c;
-
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c;
-    return hash;
-}"""
-
-
-def parsevalue_c_function():
-    """
-    return the string for the C parseValue function
-    """
-    return """
-std::string truncate(std::string str, size_t width){
-    if (str.length() > width)
-        return str.substr(0, width);
-    return str;
-}
-
-auto LinkyTIC::parseValue(char buffer_value[], int length){
-    char str[] = truncate(buffer_value, length)
 }"""
 
 

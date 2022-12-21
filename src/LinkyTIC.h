@@ -312,20 +312,20 @@ class LinkyTIC {
             uint32_t GetSMAXSN3(){return _SMAXSN3;};
         #endif
     
-        #ifdef SMAXSN1
-            uint32_t GetSMAXSN1(){return _SMAXSN1;};
+        #ifdef SMAXSN_1
+            uint32_t GetSMAXSN_1(){return _SMAXSN_1;};
         #endif
     
-        #ifdef SMAXSN11
-            uint32_t GetSMAXSN11(){return _SMAXSN11;};
+        #ifdef SMAXSN1_1
+            uint32_t GetSMAXSN1_1(){return _SMAXSN1_1;};
         #endif
     
-        #ifdef SMAXSN21
-            uint32_t GetSMAXSN21(){return _SMAXSN21;};
+        #ifdef SMAXSN2_1
+            uint32_t GetSMAXSN2_1(){return _SMAXSN2_1;};
         #endif
     
-        #ifdef SMAXSN31
-            uint32_t GetSMAXSN31(){return _SMAXSN31;};
+        #ifdef SMAXSN3_1
+            uint32_t GetSMAXSN3_1(){return _SMAXSN3_1;};
         #endif
     
         #ifdef SINSTI
@@ -336,24 +336,24 @@ class LinkyTIC {
             uint32_t GetSMAXIN(){return _SMAXIN;};
         #endif
     
-        #ifdef SMAXIN1
-            uint32_t GetSMAXIN1(){return _SMAXIN1;};
+        #ifdef SMAXIN_1
+            uint32_t GetSMAXIN_1(){return _SMAXIN_1;};
         #endif
     
         #ifdef CCASN
             uint32_t GetCCASN(){return _CCASN;};
         #endif
     
-        #ifdef CCASN1
-            uint32_t GetCCASN1(){return _CCASN1;};
+        #ifdef CCASN_1
+            uint32_t GetCCASN_1(){return _CCASN_1;};
         #endif
     
         #ifdef CCAIN
             uint32_t GetCCAIN(){return _CCAIN;};
         #endif
     
-        #ifdef CCAIN1
-            uint32_t GetCCAIN1(){return _CCAIN1;};
+        #ifdef CCAIN_1
+            uint32_t GetCCAIN_1(){return _CCAIN_1;};
         #endif
     
         #ifdef UMOY1
@@ -455,11 +455,11 @@ class LinkyTIC {
         Stream* _stream;                 // Serial stream
 
         #ifdef ADCO
-            char* _ADCO[12];
+            char _ADCO[12];
         #endif
     
         #ifdef OPTARIF
-            char* _OPTARIF[4];
+            char _OPTARIF[4];
         #endif
     
         #ifdef ISOUSC
@@ -515,11 +515,11 @@ class LinkyTIC {
         #endif
     
         #ifdef PTEC
-            char* _PTEC[4];
+            char _PTEC[4];
         #endif
     
         #ifdef DEMAIN
-            char* _DEMAIN[4];
+            char _DEMAIN[4];
         #endif
     
         #ifdef IINST
@@ -567,15 +567,15 @@ class LinkyTIC {
         #endif
     
         #ifdef HHPHC
-            char* _HHPHC[1];
+            char _HHPHC[1];
         #endif
     
         #ifdef MOTDETAT
-            char* _MOTDETAT[6];
+            char _MOTDETAT[6];
         #endif
     
         #ifdef PPOT
-            char* _PPOT[2];
+            char _PPOT[2];
         #endif
     
         #ifdef ADIR1
@@ -591,23 +591,23 @@ class LinkyTIC {
         #endif
     
         #ifdef ADSC
-            char* _ADSC[12];
+            char _ADSC[12];
         #endif
     
         #ifdef VTIC
-            char* _VTIC[2];
+            char _VTIC[2];
         #endif
     
         #ifdef DATE
-            char* _DATE[0];
+            char _DATE[0];
         #endif
     
         #ifdef NGTF
-            char* _NGTF[16];
+            char _NGTF[16];
         #endif
     
         #ifdef LTARF
-            char* _LTARF[16];
+            char _LTARF[16];
         #endif
     
         #ifdef EAST
@@ -754,20 +754,20 @@ class LinkyTIC {
             uint32_t _SMAXSN3;
         #endif
     
-        #ifdef SMAXSN1
-            uint32_t _SMAXSN1;
+        #ifdef SMAXSN_1
+            uint32_t _SMAXSN_1;
         #endif
     
-        #ifdef SMAXSN11
-            uint32_t _SMAXSN11;
+        #ifdef SMAXSN1_1
+            uint32_t _SMAXSN1_1;
         #endif
     
-        #ifdef SMAXSN21
-            uint32_t _SMAXSN21;
+        #ifdef SMAXSN2_1
+            uint32_t _SMAXSN2_1;
         #endif
     
-        #ifdef SMAXSN31
-            uint32_t _SMAXSN31;
+        #ifdef SMAXSN3_1
+            uint32_t _SMAXSN3_1;
         #endif
     
         #ifdef SINSTI
@@ -778,24 +778,24 @@ class LinkyTIC {
             uint32_t _SMAXIN;
         #endif
     
-        #ifdef SMAXIN1
-            uint32_t _SMAXIN1;
+        #ifdef SMAXIN_1
+            uint32_t _SMAXIN_1;
         #endif
     
         #ifdef CCASN
             uint32_t _CCASN;
         #endif
     
-        #ifdef CCASN1
-            uint32_t _CCASN1;
+        #ifdef CCASN_1
+            uint32_t _CCASN_1;
         #endif
     
         #ifdef CCAIN
             uint32_t _CCAIN;
         #endif
     
-        #ifdef CCAIN1
-            uint32_t _CCAIN1;
+        #ifdef CCAIN_1
+            uint32_t _CCAIN_1;
         #endif
     
         #ifdef UMOY1
@@ -811,67 +811,67 @@ class LinkyTIC {
         #endif
     
         #ifdef STGE
-            char* _STGE[8];
+            char _STGE[8];
         #endif
     
         #ifdef DPM1
-            char* _DPM1[2];
+            char _DPM1[2];
         #endif
     
         #ifdef FPM1
-            char* _FPM1[2];
+            char _FPM1[2];
         #endif
     
         #ifdef DPM2
-            char* _DPM2[2];
+            char _DPM2[2];
         #endif
     
         #ifdef FPM2
-            char* _FPM2[2];
+            char _FPM2[2];
         #endif
     
         #ifdef DPM3
-            char* _DPM3[2];
+            char _DPM3[2];
         #endif
     
         #ifdef FPM3
-            char* _FPM3[2];
+            char _FPM3[2];
         #endif
     
         #ifdef MSG1
-            char* _MSG1[32];
+            char _MSG1[32];
         #endif
     
         #ifdef MSG2
-            char* _MSG2[16];
+            char _MSG2[16];
         #endif
     
         #ifdef PRM
-            char* _PRM[14];
+            char _PRM[14];
         #endif
     
         #ifdef RELAIS
-            char* _RELAIS[3];
+            char _RELAIS[3];
         #endif
     
         #ifdef NTARF
-            char* _NTARF[2];
+            char _NTARF[2];
         #endif
     
         #ifdef NJOURF
-            char* _NJOURF[2];
+            char _NJOURF[2];
         #endif
     
         #ifdef NJOURF1
-            char* _NJOURF1[2];
+            char _NJOURF1[2];
         #endif
     
         #ifdef PJOURF1
-            char* _PJOURF1[98];
+            char _PJOURF1[98];
         #endif
     
         #ifdef PPOINTE
-            char* _PPOINTE[98];
+            char _PPOINTE[98];
         #endif
 };
 

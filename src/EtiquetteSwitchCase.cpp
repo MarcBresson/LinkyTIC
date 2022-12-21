@@ -665,38 +665,38 @@ void LinkyTIC::parse(const char tag_name[], const char buffer_value[]){
         }
         #endif
         
-        #ifdef SMAXSN1
+        #ifdef SMAXSN_1
         case hash("SMAXSN-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_SMAXSN1 = atol(_tmp);
+			_SMAXSN_1 = atol(_tmp);
             break;
         }
         #endif
         
-        #ifdef SMAXSN11
+        #ifdef SMAXSN1_1
         case hash("SMAXSN1-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_SMAXSN11 = atol(_tmp);
+			_SMAXSN1_1 = atol(_tmp);
             break;
         }
         #endif
         
-        #ifdef SMAXSN21
+        #ifdef SMAXSN2_1
         case hash("SMAXSN2-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_SMAXSN21 = atol(_tmp);
+			_SMAXSN2_1 = atol(_tmp);
             break;
         }
         #endif
         
-        #ifdef SMAXSN31
+        #ifdef SMAXSN3_1
         case hash("SMAXSN3-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_SMAXSN31 = atol(_tmp);
+			_SMAXSN3_1 = atol(_tmp);
             break;
         }
         #endif
@@ -719,11 +719,11 @@ void LinkyTIC::parse(const char tag_name[], const char buffer_value[]){
         }
         #endif
         
-        #ifdef SMAXIN1
+        #ifdef SMAXIN_1
         case hash("SMAXIN-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_SMAXIN1 = atol(_tmp);
+			_SMAXIN_1 = atol(_tmp);
             break;
         }
         #endif
@@ -737,11 +737,11 @@ void LinkyTIC::parse(const char tag_name[], const char buffer_value[]){
         }
         #endif
         
-        #ifdef CCASN1
+        #ifdef CCASN_1
         case hash("CCASN-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_CCASN1 = atol(_tmp);
+			_CCASN_1 = atol(_tmp);
             break;
         }
         #endif
@@ -755,11 +755,11 @@ void LinkyTIC::parse(const char tag_name[], const char buffer_value[]){
         }
         #endif
         
-        #ifdef CCAIN1
+        #ifdef CCAIN_1
         case hash("CCAIN-1"):{
             char _tmp[5];
             substring(_tmp, buffer_value, 5);
-			_CCAIN1 = atol(_tmp);
+			_CCAIN_1 = atol(_tmp);
             break;
         }
         #endif
