@@ -80,6 +80,8 @@ def generate_declaration(etiquette: str, longueur: str, etiquette_type: str):
     if etiquette_type.startswith("uint"):
         content = f"{type_correspondance(etiquette_type)} _{alphanumeric_etiquette};"
 
+    content += f"\n\t\t\t_max_lenght = max(_max_lenght, {longueur});"
+
     return encapsulate_in_ifdef(alphanumeric_etiquette, content)
 
 
@@ -90,8 +92,7 @@ def encapsulate_in_ifdef(condition: str, content: str):
     return f"""
         #ifdef {condition}
             {content}
-        #endif
-    """
+        #endif"""
 
 
 def type_correspondance(var_type: str, getter: bool = False):
