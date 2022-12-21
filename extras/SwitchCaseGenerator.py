@@ -5,10 +5,11 @@ The template is the following :
 ================================================
 switch (tag_name){
     #ifdef {etiquette}
-        case {etiquette}:
-            {etiquette_type} LinkyTIC::{etiquette} = parseValue(buffer_value, {longueur}, {etiquette_type})
+        case {etiquette}:{
+            // handling data
             break;
-        #endif
+        }
+    #endif
 }
 ================================================
 """
@@ -21,7 +22,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 os.chdir(dir_path)
 
 
-def assemble_cpp_file():
+def assemble_switch_case_file():
     """
     create the switch case cpp file
     """
@@ -44,12 +45,12 @@ def assemble_cpp_file():
         cpp_file.write(substring_c_function())
         cpp_file.write("\n\n")
         cpp_file.write(parse_function_beginning)
-        for case in generate():
+        for case in generate_case_statement():
             cpp_file.write(case)
         cpp_file.write(file_ending)
 
 
-def generate():
+def generate_case_statement():
     """
     generate the templated case statements
     """
@@ -75,7 +76,7 @@ def apply_template(etiquette: str, longueur: str, etiquette_type: str):
             break;
         }}
         #endif
-    """
+        """
 
 
 def convert_to_type_c_function(etiquette: str, etiquette_type: str, longueur: str = ""):
@@ -83,22 +84,23 @@ def convert_to_type_c_function(etiquette: str, etiquette_type: str, longueur: st
     return the C function that allows to convert a string to the right
     data type
     """
+    alphanumeric_etiquette = alphanumeric(etiquette)
+
     if etiquette_type == 'str':
-        return f"""char _{etiquette}[{longueur}];
-            substring(_{etiquette}, buffer_value, {longueur});"""
+        return f"""substring(_{alphanumeric_etiquette}, buffer_value, {longueur});"""
 
     if etiquette_type.startswith("uint"):
         tmp_str = f"""char _tmp[{longueur}];
             substring(_tmp, buffer_value, {longueur});\n\t\t\t"""
 
         if etiquette_type == 'uint8':
-            return tmp_str + f"uint8_t _{etiquette} = atoi(_tmp);"
+            return tmp_str + f"_{alphanumeric_etiquette} = atoi(_tmp);"
         if etiquette_type == 'uint16':
-            return tmp_str + f"uint16_t _{etiquette} = atoi(_tmp);"
+            return tmp_str + f"_{alphanumeric_etiquette} = atoi(_tmp);"
         if etiquette_type == 'uint32':
-            return tmp_str + f"uint32_t _{etiquette} = atol(_tmp);"
+            return tmp_str + f"_{alphanumeric_etiquette} = atol(_tmp);"
 
-    raise TypeError("unknown type")
+    raise TypeError(f"unknown type {etiquette_type}")
 
 
 def alphanumeric(string: str):
@@ -106,7 +108,7 @@ def alphanumeric(string: str):
     only keep alphanumeric caracters of a string
     """
     pattern = re.compile(r'[\W_]+')
-    return pattern.sub('', string)
+    return pattern.sub('', string.replace('-', '_'))
 
 
 def hash_c_function():
@@ -164,4 +166,4 @@ void substring(char* str, const char* _buffer_value, const int length){
 }"""
 
 
-assemble_cpp_file()
+assemble_switch_case_file()
