@@ -19,6 +19,9 @@ checksum |
 """
 
 from typing import Literal
+from csv import reader
+import random
+import string
 
 
 class Trame:
@@ -35,11 +38,36 @@ class Trame:
         Parameters
         ----------
         - **data_to_include** (_dict_) :
-            {'etiquette': {'type': str, 'longueur': 12}}
+            [etiquette]
+        - **mode** (_Literal["historique", "standard"]_) :
+            mode des trames à simuler
         """
-        self.data_to_include = data_to_include
+        self.create_groups(data_to_include)
         self.mode = mode
 
+    def create_groups(self, data_to_include: dict):
+        """create the list of groups for a frame"""
+        self.groups = [""] * len(data_to_include)
+
+        for i, etiquette in enumerate(data_to_include):
+            self.groups[i] = Group(data_to_include[etiquette]["type"],
+                                   etiquette,
+                                   data_to_include[etiquette]["longueur"])
+
+    def extract_etiquette_info(self) -> dict:
+        data_info = {}
+        with open('./Groupes.csv', 'r', encoding='utf8') as csv_file:
+            csv_iterator = reader(csv_file)
+            next(csv_iterator)  # skipping header
+
+            for row in csv_iterator:
+                designation, etiquette, longueur, unite, etiquette_type, horodate, mode_standard = row
+                data_info[etiquette] = {}
+                data_info[etiquette]['longueur'] = longueur
+                data_info[etiquette]['etiquette_type'] = etiquette_type
+                data_info[etiquette]['horodate'] = horodate
+
+        return data_info
 
 class Group:
     """représente un groupe"""
@@ -49,24 +77,15 @@ class Group:
     SP = 0x20
 
     def __init__(self,
+                 value_type: str,
                  etiquette: str,
-                 donnee: str | int | float,
                  longueur: int,
-                 mode: Literal["historique", "standard"],
                  has_horodate: bool = False
                  ):
+        self.value_type = value_type
         self.etiquette = etiquette
-        self.donnee = donnee
         self.longueur = longueur
         self.has_horodate = has_horodate
-
-        self.mode = mode
-        if mode == 'historique':
-            self.data_separator = self.SP
-        elif mode == 'standard':
-            self.data_separator = self.HT
-        else:
-            raise ValueError(f"Le mode {mode} n'existe pas.")
 
     def number_of_separator(self) -> int:
         """compute the number of data separator in the group"""
@@ -74,7 +93,7 @@ class Group:
             return 3
         return 2
 
-    def compute_checksum(self) -> str:
+    def compute_checksum(self, mode: Literal["historique", "standard"]) -> str:
         """calcule la checksum selon la méthode de la page 14 de la note
         externe d'enedis"""
         s = 0
@@ -83,10 +102,11 @@ class Group:
             for b in g.encode('ascii'):
                 s += b
 
-        if self.mode == 'historique':
-            separator_value = self.SP
+        data_separator = self.get_data_separator(mode)
+        if mode == 'historique':
+            separator_value = data_separator
         else:
-            separator_value = self.HT * self.number_of_separator()
+            separator_value = data_separator * self.number_of_separator()
 
         s += separator_value
 
@@ -98,33 +118,62 @@ class Group:
         c'est-à-dire Saison, Année, Mois, Jour, heure, minute, seconde."""
         return "H081225223518"
 
-    def group_component(self, include_checksum: bool = False):
+    def group_component(self,
+                        include_checksum: bool = False,
+                        mode: Literal["historique", "standard"] = "standard"
+                        ) -> list:
         """return all the components of the group"""
         checksum = []  # empty checksum by default
         if include_checksum:
-            checksum = [self.compute_checksum()]
+            checksum = [self.compute_checksum(mode=mode)]
 
         if self.has_horodate:
             return [self.etiquette,
                     self.get_horodate(),
-                    self.donnee,
-                    self.compute_checksum()] + checksum
+                    self.random_value()] + checksum
 
         return [self.etiquette,
-                self.donnee,
-                self.compute_checksum()] + checksum
+                self.random_value()] + checksum
 
-    def __str__(self) -> str:
-        group = self.group_component(include_checksum=True)
+    def to_string(self, mode: Literal["historique", "standard"]) -> str:
+        """string representation of Group"""
+        data_separator = self.get_data_separator(mode)
+
+        group = self.group_component(include_checksum=True, mode=mode)
 
         lf = chr(self.LF)
         cr = chr(self.CR)
-        sep = chr(self.data_separator)
+        sep = chr(data_separator)
 
         return f"{lf}{sep.join(group)}{cr}"
 
-    def hex(self) -> bytes:
-        """return the bytes value of the group"""
-        ascii_value = str(self)
+    def get_data_separator(self,
+                           mode: Literal["historique", "standard"]
+                           ) -> bytes:
+        """find the correct data separator in the regard of the mode"""
+        if mode == 'historique':
+            return self.SP
+        if mode == 'standard':
+            return self.HT
 
+        raise ValueError(f"Le mode {mode} n'existe pas.")
+
+    def hex(self, mode: Literal["historique", "standard"]) -> bytes:
+        """return the bytes value of the group"""
+        ascii_value = self.to_string(mode)
         return bytearray(ascii_value.encode('ascii'))
+
+    def random_value(self) -> int | str:
+        """return value corresponding to the type"""
+        if self.value_type == 'str':
+            return self.random_string(self.longueur)
+        return self.random_int(self.longueur)
+
+    def random_int(self, lenght) -> int:
+        """generate a random number with a given lenght"""
+        return random.randint(10**(lenght-1), 10**lenght)
+
+    def random_string(self, lenght) -> str:
+        """generate a random string with a given lenght"""
+        return ''.join(random.choice(string.ascii_lowercase)
+                       for _ in range(lenght))
