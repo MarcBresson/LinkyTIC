@@ -661,41 +661,42 @@
 
 class LinkyTIC {
     public:
-        bool read();                // non-blocking way of reading new value. Return true when a frame is complete
-        void readUntil(uint32_t timeout);           // blocking reading function
+		static const uint16_t DEFAULT_TIMEOUT = 1000;
 
 		enum MODE {HISTORIQUE, STANDARD};
 
-        LinkyTIC(Stream&, MODE);   /* Constructor */
-    private:
-		MODE _mode;
+        LinkyTIC(Stream&, MODE);
+        bool read();
+        void readUntil(uint32_t timeout = DEFAULT_TIMEOUT);
 
+
+    private:
         enum STATUS {STATUS_WAITING, STATUS_OK, STATUS_FAILED};
         STATUS _status;
+		MODE _mode;
 
-        char _checksum;                 // calculus of the group checksum
-
-        char _buffer_tag[8];            // buffer for the tag name
-        char _buffer_value[MaximumLength];         // buffer for the tag value
-        char _buffer_checksum[1];       // buffer for the tag checksum
-		char _buffer_date[9];          // buffer for the (optional) tag date. Must be the same length as value because we can't know in advance if it s going to be a date or a value
-
-		#ifdef HAS_HORODATE
-        	char* _buffers[4] = {_buffer_tag, _buffer_value, _buffer_checksum, _buffer_date};   // reference to each buffer
-		#else
-        	char* _buffers[3] = {_buffer_tag, _buffer_value, _buffer_checksum};   // reference to each buffer
-		#endif
-
-        uint8_t _buffer_reference_index;// define which pointer to use
-        uint8_t _buffer_index;          // current buffer index
+        char _calculated_checksum;			// calculus of the group checksum
+        uint8_t _buffer_reference_index;	// define which pointer to use
+        uint8_t _buffer_index;          	// current buffer index
         bool _group_recep_in_progress;
 
-        void readByte();                // read one new serial byte and happen it to the buffer
-        void checksum(char received_checksum, char computed_checksum);    // verify that the two checksums match
-        void parse(const char* tag_name, const char* buffer_value);       // set the value of the tag in the structure to the desired value
+        char _buffer_tag[8];                // buffer for the tag name
+        char _buffer_value[MaximumLength];  // buffer for the tag value
+        char _checksum[1];       		    // buffer for the tag checksum
+
+        void readByte();
+        void checksum(char received_checksum, char computed_checksum);
+        void parse(const char* tag_name, const char* buffer_value);
         void resetBuffers();
 
         Stream* _stream;                 // Serial stream
+
+		#ifdef HAS_HORODATE
+			char _buffer_date[9];           // buffer for the (optional) tag date.
+        	char* _buffers[4] = {_buffer_tag, _buffer_value, _checksum, _buffer_date};   // reference to each buffer
+		#else
+        	char* _buffers[3] = {_buffer_tag, _buffer_value, _checksum};   // reference to each buffer
+		#endif
 
 	#ifdef ADCO
 		public: char* GetADCO(){return _ADCO;};
