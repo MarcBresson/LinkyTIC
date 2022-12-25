@@ -1,4 +1,4 @@
-#include "LinkyTIC.cpp"
+#include "LinkyTIC.h"
 
 
 constexpr unsigned int hash(const char* str, int h = 0){
@@ -12,7 +12,7 @@ void substring(char* str, const char* _buffer_value, const int length){
     }
 }
 
-void LinkyTIC::parse(const char tag_name[], const char buffer_value[]){
+void LinkyTIC::parse(const char* tag_name, const char* buffer_value){
     switch (hash(tag_name)){
         #ifdef ADCO
         case hash("ADCO"):{
