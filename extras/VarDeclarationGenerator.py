@@ -29,19 +29,15 @@ def assemble_var_declaration_file():
     """
 
     with open('VarDeclaration.h', 'w', encoding='utf8') as h_file:
-        h_file.write("\tpublic:")
 
-        for getter in etiquette_iterator(getter=True):
-            h_file.write(getter)
+        for content in etiquette_iterator(max_length_has_date=True):
+            h_file.write(content)
 
-        h_file.write("\n\n\n")
-        h_file.write("\tprivate:")
-
-        for getter in etiquette_iterator(declaration=True):
-            h_file.write(getter)
+        for content in etiquette_iterator(getter_and_declaration=True):
+            h_file.write(content)
 
 
-def etiquette_iterator(getter: bool = False, declaration: bool = False):
+def etiquette_iterator(getter_and_declaration: bool = False, max_length_has_date: bool = False):
     """
     generate the templated case statements
     """
@@ -53,46 +49,59 @@ def etiquette_iterator(getter: bool = False, declaration: bool = False):
             designation, etiquette, longueur, unite, etiquette_type, horodate, mode_standard = row
             etiquette = etiquette.strip()
 
-            if getter:
-                yield generate_getter(etiquette, longueur, etiquette_type)
-            elif declaration:
-                yield generate_declaration(etiquette, longueur, etiquette_type)
+            if getter_and_declaration:
+                yield generate_getter_and_declaration(etiquette, longueur, etiquette_type)
+            elif max_length_has_date:
+                has_date = horodate == "x"
+                yield generate_max_length_has_date(etiquette, longueur, has_date)
 
 
-def generate_getter(etiquette: str, longueur: str, etiquette_type: str):
+def generate_getter_and_declaration(etiquette: str, longueur: str, etiquette_type: str):
     """
     apply getter template to a row of data
     """
     alphanumeric_etiquette = alphanumeric(etiquette)
-    content = f"""{type_correspondance(etiquette_type, True)} Get{alphanumeric_etiquette}(){{return _{alphanumeric_etiquette};}};"""
-    return encapsulate_in_ifdef(alphanumeric_etiquette, content)
+
+    content = (f"public: {type_correspondance(etiquette_type, True)}"
+               f" Get{alphanumeric_etiquette}()"
+               f"{{return _{alphanumeric_etiquette};}};\n")
+
+    char_length = ""
+    if etiquette_type == 'str':
+        char_length = f"[{longueur}]"
+
+    content += ("\t\t\t"
+                f"private: {type_correspondance(etiquette_type)}"
+                f" _{alphanumeric_etiquette}{char_length};")
+
+    return encapsulate_in_ifdef(alphanumeric_etiquette, content, 2)
 
 
-def generate_declaration(etiquette: str, longueur: str, etiquette_type: str):
+def generate_max_length_has_date(etiquette: str, longueur: str, has_horodate: bool):
     """
-    apply variable declaration template to a row of data
+    write C++ code for the maximum length preprocessing
     """
     alphanumeric_etiquette = alphanumeric(etiquette)
 
-    if etiquette_type == 'str':
-        content = f"{type_correspondance(etiquette_type)} _{alphanumeric_etiquette}[{longueur}];"
+    content = (f"#if MaximumLength > {longueur}\n"
+               "\t\t#undef MaximumLength\n"
+               f"\t\t#define MaximumLength {longueur}\n"
+               "\t#endif")
 
-    if etiquette_type.startswith("uint"):
-        content = f"{type_correspondance(etiquette_type)} _{alphanumeric_etiquette};"
-
-    content += f"\n\t\t\t_max_lenght = max(_max_lenght, {longueur});"
+    if has_horodate:
+        content += "\n\t#define HAS_HORODATE true"
 
     return encapsulate_in_ifdef(alphanumeric_etiquette, content)
 
 
-def encapsulate_in_ifdef(condition: str, content: str):
+def encapsulate_in_ifdef(condition: str, content: str, number_of_tab: int = 0):
     """
     encapsulate a content inside a ifdef; endif condition
     """
-    return f"""
-        #ifdef {condition}
-            {content}
-        #endif"""
+    tab_car = "\t"
+    return (f"{tab_car*number_of_tab}#ifdef {condition}\n"
+            f"{tab_car*(number_of_tab+1)}{content}\n"
+            f"{tab_car*number_of_tab}#endif\n")
 
 
 def type_correspondance(var_type: str, getter: bool = False):
