@@ -70,11 +70,11 @@ def generate_getter_and_declaration(etiquette: str, longueur: str, etiquette_typ
     if etiquette_type == 'str':
         char_length = f"[{longueur}]"
 
-    content += ("\t\t\t"
+    content += ("\t\t"
                 f"private: {type_correspondance(etiquette_type)}"
                 f" _{alphanumeric_etiquette}{char_length};")
 
-    return encapsulate_in_ifdef(alphanumeric_etiquette, content, 2)
+    return encapsulate_in_ifdef(alphanumeric_etiquette, content, 1)
 
 
 def generate_max_length_has_date(etiquette: str, longueur: str, has_horodate: bool):
