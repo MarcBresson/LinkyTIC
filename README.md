@@ -22,25 +22,24 @@
 # Utilisation
 
 ```C
-#include LinkyTIC.h
+#define BASE
+#define OPTARIF
+#define SMAXIN
 
-#define LINKY_GROUPS {"GROUP_1","GROUP_5","GROUP_3","GROUP_P"}
+#include "LinkyTIC.h"
+#include <SoftwareSerial.h>
 
-LinkyTIC Linky(pin_LkyRx);
-LinkyTIC::DATA linky_data
+SoftwareSerial LinkySerial(13, 15);
+LinkyTIC linky(LinkySerial, LinkyTIC::STANDARD);
 
-void setup(){
-    Linky.init()
+void setup() {
 }
 
-void loop(){
-    if(Linky.read(linky_data)){
-        linky_data.GROUP_1
-        linky_data.GROUP_5
-        linky_data.GROUP_3
-        linky_data.GROUP_P
-        linky_data.GROUP_OUPS //unknown, must not compile
-    }
+void loop() {
+  if(linky.read()){
+    int base = linky.GetBASE();
+    Serial.println(base);
+  }
 }
 ```
 
