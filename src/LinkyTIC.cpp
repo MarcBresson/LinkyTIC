@@ -1,4 +1,5 @@
 #include "LinkyTIC.h"
+#include <stdlib.h>
 
 
 LinkyTIC::LinkyTIC(Stream& stream, MODE mode){

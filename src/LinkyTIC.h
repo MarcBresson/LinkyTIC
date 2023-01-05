@@ -1,7 +1,9 @@
 #ifndef _LINKYTIC
 #define _LINKYTIC
 
-#include "Stream.h"
+#include <Stream.h>
+#include <stdint.h>
+
 
 #define MaximumLength 0
 #ifdef ADCO
