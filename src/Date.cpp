@@ -1,4 +1,6 @@
 #include "Date.h"
+#include <cctype>
+#include <stdlib.h>
 
 
 char* substring(const char* _buffer_value, const uint8_t start){
@@ -15,6 +17,13 @@ char* substring(const char* _buffer_value, const uint8_t start){
 
 void Date::parse(const char* horodate){
     saison = horodate[0];
+
+    if(isupper(saison)){
+        mode = NORMAL;
+    } else {
+        mode = DEGRADE;
+    }
+
     annee = atoi(substring(horodate, 1));
     mois = atoi(substring(horodate, 3));
     jours = atoi(substring(horodate, 5));
