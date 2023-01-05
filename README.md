@@ -45,8 +45,4 @@ void loop() {
 
 ## Importer la bibliothèque dans votre code
 
-## Paramètrer la bibliothèque
-
 ### Lecture des valeurs qui vous intéressent
-
-## Example d'utilisation
